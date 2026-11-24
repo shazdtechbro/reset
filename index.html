@@ -1,0 +1,1427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="7-Day Reset">
+<title>7-Day Reset</title>
+
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #121216;
+  --card: #1c1c21;
+  --muted: #a1a1aa;
+  --orange: #ff591e;
+  --line: #2c2c33;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: calc(22px + env(safe-area-inset-top)) 18px calc(40px + env(safe-area-inset-bottom));
+}
+
+h1 {
+  font-size: 36px;
+  letter-spacing: -1.5px;
+  margin: 0 0 8px;
+  font-weight: 850;
+}
+
+h2 {
+  font-size: 23px;
+  letter-spacing: -.5px;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+button, input, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 12px;
+  font-weight: 700;
+  touch-action: manipulation;
+}
+
+button:active {
+  opacity: .7;
+}
+
+input, textarea {
+  min-width: 0;
+  width: 100%;
+  background: #151519;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  outline: none;
+  font-size: 16px;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--orange);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ring {
+  width: 92px;
+  height: 92px;
+  flex-shrink: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.ring svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.ring b {
+  font-size: 25px;
+}
+
+.ringlabel {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top);
+  z-index: 5;
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 18px 0 13px;
+  border-bottom: 1px solid var(--line);
+}
+
+nav button {
+  padding: 10px 3px;
+  min-width: 0;
+  border-radius: 13px;
+  font-size: 14px;
+}
+
+nav strong {
+  display: block;
+  font-size: 23px;
+  margin: 4px 0;
+}
+
+nav .active {
+  background: #f4f4f4;
+  color: #121216;
+}
+
+.track {
+  height: 4px;
+  background: #34343b;
+  border-radius: 5px;
+  margin: 5px 5px 0;
+  overflow: hidden;
+}
+
+.track i {
+  display: block;
+  background: var(--orange);
+  height: 100%;
+}
+
+.active .track {
+  background: #bbb;
+}
+
+section {
+  margin-top: 32px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 8px;
+}
+
+.count {
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 17px;
+  padding: 16px;
+  margin: 8px 0;
+  min-height: 76px;
+}
+
+.item.done {
+  background: #382015;
+}
+
+.time {
+  flex: 0 0 82px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.time small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail b {
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+.detail p {
+  font-size: 14px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.done .detail b {
+  text-decoration: line-through;
+  text-decoration-color: var(--orange);
+}
+
+.check {
+  width: 41px;
+  height: 41px;
+  flex: 0 0 41px;
+  border: 2px solid var(--line);
+  border-radius: 13px;
+  padding: 0;
+  background: transparent;
+  font-size: 25px;
+  display: grid;
+  place-items: center;
+}
+
+.done .check {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
+}
+
+.priority {
+  color: var(--orange);
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.priorityinput {
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  flex: 1;
+}
+
+.done .priorityinput {
+  text-decoration: line-through;
+  text-decoration-color: var(--orange);
+}
+
+.add {
+  background: var(--orange);
+  color: white;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.taskform {
+  background: var(--card);
+  padding: 14px;
+  border-radius: 17px;
+  margin-top: 10px;
+}
+
+.fields {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.fields > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.actions button {
+  padding: 8px 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+textarea {
+  background: var(--card);
+  border: 1px solid transparent;
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.taskform textarea {
+  background: #151519;
+  border-color: var(--line);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.stat b {
+  display: block;
+  font-size: 29px;
+  margin-bottom: 8px;
+}
+
+.stat span {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.matrix {
+  background: var(--card);
+  border-radius: 17px;
+  padding: 14px 10px;
+  margin-top: 10px;
+}
+
+.matrixrow {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) repeat(7, minmax(16px, 24px));
+  gap: 5px;
+  align-items: center;
+  min-height: 34px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  background: var(--line);
+  justify-self: center;
+}
+
+.dot.on {
+  background: var(--orange);
+}
+
+.dot.partial {
+  background: #98502d;
+}
+
+.matrixrow span:not(:first-child) {
+  text-align: center;
+}
+
+.foot {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.empty {
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+dialog {
+  background: var(--card);
+  color: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  width: min(90%, 420px);
+  padding: 20px;
+}
+
+dialog::backdrop {
+  background: #0009;
+}
+
+@media(max-width: 360px) {
+  .time {
+    flex-basis: 64px;
+  }
+
+  .item {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .matrixrow {
+    gap: 3px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main>
+  <div id="hero"></div>
+  <nav id="nav"></nav>
+  <div id="content"></div>
+
+  <p class="foot" id="status">
+    Saved automatically on this device.
+  </p>
+</main>
+
+<dialog id="editor">
+  <form id="editform">
+
+    <h2>Edit task</h2>
+
+    <input
+      id="editname"
+      required
+      style="margin-top:16px"
+      aria-label="Task name">
+
+    <input
+      id="edittime"
+      type="time"
+      style="margin-top:8px"
+      aria-label="Scheduled time">
+
+    <textarea
+      id="editnotes"
+      style="margin-top:8px;min-height:80px"
+      placeholder="Additional notes">
+    </textarea>
+
+    <div class="fields">
+
+      <button type="button" id="cancel">
+        Cancel
+      </button>
+
+      <button
+        class="add"
+        style="margin:0"
+        type="submit">
+        Save
+      </button>
+
+    </div>
+
+  </form>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  // New storage key prevents old pre-ticked
+  // data from being imported.
+
+  const KEY = 'seven-day-reset-clean-v2';
+
+  const start = new Date(2026, 10, 24);
+
+  const habits = [
+    [
+      '4:30',
+      'to 5:00 am',
+      'Qiyamul Layl',
+      'Night prayer before dawn'
+    ],
+    [
+      '5:00',
+      'to 6:00 am',
+      'Sahur & Fajr',
+      'Pre-dawn meal, then Fajr'
+    ],
+    [
+      '6:00',
+      'to 7:00 am',
+      'Laundry',
+      'Wash, dry, fold, put away'
+    ],
+    [
+      '7:00',
+      'to 8:00 am',
+      'Body care & prep',
+      'Shower, skincare, dress, get ready'
+    ],
+    [
+      '8:00',
+      'am',
+      'Plan my day',
+      'Set today’s top 3 below'
+    ],
+    [
+      '10:00',
+      'pm',
+      'Reply all messages',
+      'Clear WhatsApp, email, DMs'
+    ],
+    [
+      '10:15',
+      'pm',
+      'List & prioritise tasks',
+      'Block out tomorrow’s tasks'
+    ],
+    [
+      '10:30',
+      'pm',
+      'Journal & reflection',
+      'Write in the box below'
+    ],
+    [
+      '11:00',
+      'pm',
+      'Sleep by 11',
+      'Phone down, lights out'
+    ]
+  ];
+
+  // Completely empty initial state.
+  // No pre-ticked habits or sample data.
+
+  function freshData() {
+    return Array.from({ length: 7 }, () => ({
+      checks: Array(12).fill(false),
+      priorities: ['', '', ''],
+      tasks: [],
+      journal: '',
+      draft: {
+        name: '',
+        time: '',
+        notes: ''
+      }
+    }));
+  }
+
+  let data = freshData();
+
+  // Only restore data saved by the user.
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(KEY)
+    );
+
+    if (Array.isArray(saved) && saved.length === 7) {
+
+      data = saved.map(d => {
+
+        d = d || {};
+
+        return {
+          checks: Array.from(
+            { length: 12 },
+            (_, i) => d.checks?.[i] === true
+          ),
+
+          priorities: Array.from(
+            { length: 3 },
+            (_, i) =>
+              typeof d.priorities?.[i] === 'string'
+                ? d.priorities[i]
+                : ''
+          ),
+
+          tasks: Array.isArray(d.tasks)
+            ? d.tasks
+            : [],
+
+          journal: typeof d.journal === 'string'
+            ? d.journal
+            : '',
+
+          draft: {
+            name: d.draft?.name || '',
+            time: d.draft?.time || '',
+            notes: d.draft?.notes || ''
+          }
+        };
+
+      });
+
+    }
+
+  } catch (error) {
+    console.warn('Unable to restore data.', error);
+  }
+
+  const date = i => new Date(2026, 10, 24 + i);
+
+  const today = new Date();
+
+  let day = Math.max(
+    0,
+    Math.min(
+      6,
+      Math.round(
+        (
+          new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          ) - start
+        ) / 86400000
+      )
+    )
+  );
+
+  let editing = null;
+
+  const $ = id => document.getElementById(id);
+
+  const esc = s => String(s ?? '').replace(
+    /[&<>"']/g,
+    c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c])
+  );
+
+  function save() {
+    try {
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+      );
+
+      $('status').textContent =
+        'Saved automatically on this device.';
+
+    } catch (error) {
+
+      $('status').textContent =
+        'Storage unavailable. Changes may not persist.';
+
+    }
+  }
+
+  const ticks = d => d.checks.filter(Boolean).length;
+
+  const pct = n => Math.round(n * 100 / 12);
+
+  function renderHeader() {
+
+    const total = data.reduce(
+      (a, d) => a + ticks(d),
+      0
+    );
+
+    const p = Math.round(total / 84 * 100);
+
+    $('hero').innerHTML = `
+
+      <div class="hero">
+
+        <div>
+
+          <h1>7-Day Reset</h1>
+
+          <p>
+            Day ${day + 1} of 7 ·
+            ${date(day).toLocaleDateString('en-GB', {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'short'
+            })}
+            ${
+              date(day).toDateString() === today.toDateString()
+                ? ' · today'
+                : ''
+            }
+          </p>
+
+        </div>
+
+        <div>
+
+          <div class="ring">
+
+            <svg viewBox="0 0 100 100">
+
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="#2c2c33"
+                stroke-width="12"/>
+
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="#ff591e"
+                stroke-width="12"
+                stroke-linecap="round"
+                stroke-dasharray="${p * 2.639} 264"
+                opacity="${p === 0 ? 0 : 1}"/>
+
+            </svg>
+
+            <b>${p}%</b>
+
+          </div>
+
+          <div class="ringlabel">
+            all 7 days
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+    $('nav').innerHTML = data.map((d, i) => `
+
+      <button
+        type="button"
+        class="${i === day ? 'active' : ''}"
+        data-day="${i}"
+        aria-label="Day ${i + 1}"
+        aria-pressed="${i === day}">
+
+        D${i + 1}
+
+        <strong>
+          ${date(i).getDate()}
+        </strong>
+
+        <div class="track">
+          <i style="width:${pct(ticks(d))}%"></i>
+        </div>
+
+      </button>
+
+    `).join('');
+
+  }
+
+  function check(i, on) {
+
+    return `
+
+      <button
+        type="button"
+        class="check"
+        data-check="${i}"
+        aria-label="${on ? 'Mark incomplete' : 'Mark complete'}"
+        aria-pressed="${on}">
+
+        ${on ? '✓' : ''}
+
+      </button>
+
+    `;
+
+  }
+
+  function habit(i) {
+
+    const h = habits[i];
+
+    const on = data[day].checks[i];
+
+    return `
+
+      <div class="item ${on ? 'done' : ''}">
+
+        <div class="time">
+
+          ${h[0]}
+
+          <small>${h[1]}</small>
+
+        </div>
+
+        <div class="detail">
+
+          <b>${h[2]}</b>
+
+          <p>${h[3]}</p>
+
+        </div>
+
+        ${check(i, on)}
+
+      </div>
+
+    `;
+
+  }
+
+  function heading(s, c) {
+
+    return `
+
+      <div class="heading">
+
+        <h2>${s}</h2>
+
+        <span class="count">${c}</span>
+
+      </div>
+
+    `;
+
+  }
+
+  function count(ids) {
+
+    return (
+      ids.filter(i => data[day].checks[i]).length
+      + '/'
+      + ids.length
+    );
+
+  }
+
+  function formatTime(t) {
+
+    if (!t) return '';
+
+    const [h, m] = t.split(':').map(Number);
+
+    return (
+      `${h % 12 || 12}:` +
+      `${String(m).padStart(2, '0')} ` +
+      `${h < 12 ? 'am' : 'pm'}`
+    );
+
+  }
+
+  function render() {
+
+    renderHeader();
+
+    const d = data[day];
+
+    const sortedTasks = [...d.tasks].sort((a, b) => {
+
+      if (!a.time && !b.time) return 0;
+
+      if (!a.time) return 1;
+
+      if (!b.time) return -1;
+
+      return a.time.localeCompare(b.time);
+
+    });
+
+    $('content').innerHTML = `
+
+      <section>
+
+        ${heading(
+          'Before dawn & morning',
+          count([0, 1, 2, 3])
+        )}
+
+        ${[0, 1, 2, 3].map(habit).join('')}
+
+      </section>
+
+      <section>
+
+        ${heading(
+          'Plan my day',
+          count([4, 9, 10, 11])
+        )}
+
+        ${habit(4)}
+
+        ${d.priorities.map((p, i) => `
+
+          <div class="item ${d.checks[i + 9] ? 'done' : ''}">
+
+            <span class="priority">
+              ${i + 1}
+            </span>
+
+            <input
+              class="priorityinput"
+              data-priority="${i}"
+              placeholder="Priority ${i + 1} for today"
+              value="${esc(p)}"
+              aria-label="Priority ${i + 1}">
+
+            ${check(i + 9, d.checks[i + 9])}
+
+          </div>
+
+        `).join('')}
+
+      </section>
+
+      <section>
+
+        ${heading(
+          'My daily tasks',
+          d.tasks.filter(t => t.done).length
+          + '/'
+          + d.tasks.length
+        )}
+
+        ${
+          d.tasks.length
+            ? ''
+            : '<p class="empty">What else do you want to accomplish today?</p>'
+        }
+
+        ${sortedTasks.map(t => `
+
+          <div class="item ${t.done ? 'done' : ''}">
+
+            <div class="detail">
+
+              <b>${esc(t.name)}</b>
+
+              ${
+                t.time
+                  ? `<p>${formatTime(t.time)}</p>`
+                  : ''
+              }
+
+              ${
+                t.notes
+                  ? `<p>${esc(t.notes)}</p>`
+                  : ''
+              }
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  data-edit="${esc(t.id)}">
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  data-delete="${esc(t.id)}">
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              class="check"
+              data-task="${esc(t.id)}"
+              aria-label="${t.done ? 'Mark incomplete' : 'Mark complete'}"
+              aria-pressed="${t.done}">
+
+              ${t.done ? '✓' : ''}
+
+            </button>
+
+          </div>
+
+        `).join('')}
+
+        <form class="taskform" id="taskform">
+
+          <input
+            id="taskname"
+            placeholder="Add a task for today…"
+            value="${esc(d.draft.name)}"
+            required
+            aria-label="New task">
+
+          <textarea
+            id="tasknotes"
+            placeholder="Notes or details (optional)"
+            style="margin-top:8px;min-height:65px">${esc(d.draft.notes)}</textarea>
+
+          <div class="fields">
+
+            <input
+              id="tasktime"
+              type="time"
+              value="${esc(d.draft.time)}"
+              aria-label="Optional scheduled time">
+
+            <button
+              class="add"
+              style="margin:0"
+              type="submit">
+
+              + Add task
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <section>
+
+        ${heading(
+          'Night',
+          count([5, 6, 7, 8])
+        )}
+
+        ${[5, 6, 7, 8].map(habit).join('')}
+
+        <textarea
+          id="journal"
+          placeholder="Journal & reflection: what went well today, what slipped, one thing to fix tomorrow…"
+          aria-label="Daily journal">${esc(d.journal)}</textarea>
+
+      </section>
+
+      <section id="progress">
+
+        ${heading(
+          'Progress',
+          'Day ' + (day + 1) + ': ' + pct(ticks(d)) + '%'
+        )}
+
+        <div class="stats">
+
+          <div class="stat">
+
+            <b>${data.reduce((a, x) => a + ticks(x), 0)}</b>
+
+            <span>of 84 ticks</span>
+
+          </div>
+
+          <div class="stat">
+
+            <b>${data.filter(x => ticks(x) === 12).length}</b>
+
+            <span>perfect days</span>
+
+          </div>
+
+          <div class="stat">
+
+            <b>${data.filter(x => x.checks[0]).length}/7</b>
+
+            <span>qiyam nights</span>
+
+          </div>
+
+        </div>
+
+        <div class="matrix">
+
+          <div class="matrixrow">
+
+            <span></span>
+
+            ${data.map((_, i) => `
+              <span>D${i + 1}</span>
+            `).join('')}
+
+          </div>
+
+          ${[
+            ...habits.map(h => h[2]),
+            'Top 3 priorities'
+          ].map((name, i) => `
+
+            <div class="matrixrow">
+
+              <span>${name}</span>
+
+              ${data.map(x => `
+
+                <i class="dot ${
+                  i === 9
+                    ? x.checks.slice(9).every(Boolean)
+                      ? 'on'
+                      : x.checks.slice(9).some(Boolean)
+                        ? 'partial'
+                        : ''
+                    : x.checks[i]
+                      ? 'on'
+                      : ''
+                }"></i>
+
+              `).join('')}
+
+            </div>
+
+          `).join('')}
+
+          <div class="matrixrow">
+
+            <span>Daily tasks</span>
+
+            ${data.map(x => `
+
+              <i class="dot ${
+                x.tasks.length &&
+                x.tasks.every(t => t.done)
+                  ? 'on'
+                  : x.tasks.some(t => t.done)
+                    ? 'partial'
+                    : ''
+              }"></i>
+
+            `).join('')}
+
+          </div>
+
+        </div>
+
+      </section>
+
+    `;
+
+  }
+
+  function update() {
+
+    save();
+
+    const scroll = window.scrollY;
+
+    render();
+
+    window.scrollTo(0, scroll);
+
+  }
+
+  document.addEventListener('click', e => {
+
+    const b = e.target.closest('button');
+
+    if (!b) return;
+
+    const a = b.dataset;
+
+    const d = data[day];
+
+    if (a.day !== undefined) {
+
+      day = Number(a.day);
+
+      render();
+
+      window.scrollTo(0, 0);
+
+    } else if (a.check !== undefined) {
+
+      const i = Number(a.check);
+
+      if (
+        i >= 9 &&
+        !d.priorities[i - 9].trim()
+      ) {
+
+        document.querySelector(
+          `[data-priority="${i - 9}"]`
+        ).focus();
+
+        return;
+
+      }
+
+      d.checks[i] = !d.checks[i];
+
+      update();
+
+    } else if (a.task) {
+
+      const t = d.tasks.find(
+        t => t.id === a.task
+      );
+
+      if (t) {
+
+        t.done = !t.done;
+
+        update();
+
+      }
+
+    } else if (a.delete) {
+
+      if (window.confirm('Delete this task?')) {
+
+        d.tasks = d.tasks.filter(
+          t => t.id !== a.delete
+        );
+
+        update();
+
+      }
+
+    } else if (a.edit) {
+
+      editing = d.tasks.find(
+        t => t.id === a.edit
+      );
+
+      if (!editing) return;
+
+      $('editname').value = editing.name;
+
+      $('edittime').value = editing.time || '';
+
+      $('editnotes').value = editing.notes || '';
+
+      $('editor').showModal();
+
+    }
+
+  });
+
+  function handleInput(e) {
+
+    const d = data[day];
+
+    if (e.target.dataset.priority !== undefined) {
+
+      const i = Number(e.target.dataset.priority);
+
+      d.priorities[i] = e.target.value;
+
+      save();
+
+    }
+
+    if (e.target.id === 'journal') {
+
+      d.journal = e.target.value;
+
+      save();
+
+    }
+
+    if (e.target.id === 'taskname') {
+
+      d.draft.name = e.target.value;
+
+      save();
+
+    }
+
+    if (e.target.id === 'tasktime') {
+
+      d.draft.time = e.target.value;
+
+      save();
+
+    }
+
+    if (e.target.id === 'tasknotes') {
+
+      d.draft.notes = e.target.value;
+
+      save();
+
+    }
+
+  }
+
+  document.addEventListener('input', handleInput);
+
+  document.addEventListener('change', handleInput);
+
+  document.addEventListener('focusout', e => {
+
+    if (e.target.dataset.priority !== undefined) {
+
+      const i = Number(e.target.dataset.priority);
+
+      const d = data[day];
+
+      if (
+        !d.priorities[i].trim() &&
+        d.checks[i + 9]
+      ) {
+
+        d.checks[i + 9] = false;
+
+        save();
+
+        // Refresh after the current interaction.
+        setTimeout(() => {
+
+          if (!document.activeElement.matches('input, textarea')) {
+            render();
+          }
+
+        }, 150);
+
+      }
+
+    }
+
+  });
+
+  document.addEventListener('submit', e => {
+
+    e.preventDefault();
+
+    if (e.target.id === 'taskform') {
+
+      const name = $('taskname').value.trim();
+
+      if (!name) return;
+
+      data[day].tasks.push({
+
+        id:
+          Date.now().toString(36)
+          + Math.random().toString(36).slice(2, 7),
+
+        name: name,
+
+        time: $('tasktime').value,
+
+        notes: $('tasknotes').value.trim(),
+
+        done: false
+
+      });
+
+      data[day].draft = {
+        name: '',
+        time: '',
+        notes: ''
+      };
+
+      update();
+
+    } else if (
+      e.target.id === 'editform' &&
+      editing
+    ) {
+
+      const name = $('editname').value.trim();
+
+      if (!name) return;
+
+      editing.name = name;
+
+      editing.time = $('edittime').value;
+
+      editing.notes = $('editnotes').value.trim();
+
+      $('editor').close();
+
+      editing = null;
+
+      update();
+
+    }
+
+  });
+
+  $('cancel').addEventListener('click', () => {
+
+    $('editor').close();
+
+    editing = null;
+
+  });
+
+  $('editor').addEventListener('close', () => {
+
+    editing = null;
+
+  });
+
+  // All user changes are saved immediately.
+  // No server, database, accounts or backup system.
+
+  render();
+
+})();
+</script>
+
+</body>
+</html>
